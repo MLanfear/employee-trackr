@@ -1,10 +1,25 @@
 {
+  "name": "employee-trackr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MLanfear/employee-trackr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MLanfear/employee-trackr.git"
+  },
+  "homepage": "https://github.com/MLanfear/employee-trackr.git#readme",
   "dependencies": {
     "console.table": "^0.10.0",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
     "inquirer": "^8.2.4",
-    "mysql2": "^2.3.3",
-    "sequelize": "^6.25.5"
+    "mysql2": "^2.3.3"
   }
 }
