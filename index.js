@@ -32,41 +32,41 @@ const mainPrompts = () => {
       let choice = res.choice;
       // call function depending on user choice
       switch (choice) {
-        case 'View all departments':
-          viewAllDepartments();
-          break;
-        case 'View all roles':
-          viewAllRoles();
-          break;
-        case 'View all employees':
-          viewAllEmployees();
-          break;
-        case 'Add a department':
-          addDepartment();
-          break;
-        case 'Delete a department':
-          deleteDepartment();
-          break;
-        case 'Add a role':
-          addRole();
-          break;
-        case 'Delete a role':
-          deleteRole();
-          break;
-        case 'Add an employee':
-          addEmployee();
-          break;
-        case 'Delete an employee':
-          deleteEmployee();
-          break;
-        case "Update an employee's role":
-          updateEmployeeRole();
-          break;
-        case "Update an employee's manager":
-          updateEmployeeManager();
-          break;
+          case 'View all departments':
+              viewAllDepartments();
+              break;
+          case 'View all roles':
+              viewAllRoles();
+              break;
+          case 'View all employees':
+              viewAllEmployees();
+              break;
+          case 'Add a department':
+              addDepartment();
+              break;
+          case 'Delete a department':
+              deleteDepartment();
+              break;
+          case 'Add a role':
+              addRole();
+              break;
+          case 'Delete a role':
+              deleteRole();
+              break;
+          case 'Add an employee':
+              addEmployee();
+              break;
+          case 'Delete an employee':
+              deleteEmployee();
+              break;
+          case "Update an employee's role":
+              updateEmployeeRole();
+              break;
+          case "Update an employee's manager":
+              updateEmployeeManager();
+              break;
           default:
-          quit();
+              quit();
       }
     });
 };

@@ -12,6 +12,8 @@
 
 Easy to use MySql Database tool to simplify employee and department information management!
 
+<img src="images/employee-trackr.png)">
+
 
   ## Installation
   
