@@ -12,7 +12,7 @@
 
 Easy to use MySql Database tool to simplify employee and department information management!
 
-<img src="images/employee-trackr.png)">
+<img src="![Alt text](../../../../../C:/Users/Maxjl/projects/employee-trackr/images/employee-trackr.png)">
 
 
   ## Installation
