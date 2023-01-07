@@ -3,35 +3,34 @@ const inquirer = require('inquirer');
 const db = require('./db');
 require('console.table');
 
-// function that holds prompts
 const mainPrompts = () => {
   console.log("Welcome to Employee Trackr!");
-  inquirer
-    .prompt([
-      {
-        type: 'list',
-        name: 'choice',
-        message: 'What would you like to do?',
-        choices: [
-          'View all departments',
-          'View all roles',
-          'View all employees',
-          'Add a department',
-          'Delete a department',
-          'Add a role',
-          'Delete a role',
-          'Add an employee',
-          'Delete an employee',
-          "Update an employee's role",
-          "Update an employee's manager",
-          'Quit'
-        ]
-      }
-    ])
+    inquirer
+      .prompt([
+        {
+          type: 'list',
+          name: 'choice',
+          message: 'What would you like to do?',
+          choices: [
+            'View all departments',
+            'View all roles',
+            'View all employees',
+            'Add a department',
+            'Delete a department',
+            'Add a role',
+            'Delete a role',
+            'Add an employee',
+            'Delete an employee',
+            "Update an employee's role",
+            "Update an employee's manager",
+            'Quit'
+          ]
+        }
+      ])
     .then(res => {
       let choice = res.choice;
       // call function depending on user choice
-      switch (choice) {
+        switch (choice) {
           case 'View all departments':
               viewAllDepartments();
               break;
@@ -67,7 +66,7 @@ const mainPrompts = () => {
               break;
           default:
               quit();
-      }
+        }
     });
 };
 
@@ -89,11 +88,9 @@ const viewAllRoles = () => {
       let roles = rows;
       console.table(roles);
     })
-    // send user back to prompts
     .then(() => mainPrompts());
 };
 
-// function for view all employees
 const viewAllEmployees = () => {
   db.findAllEmployees()
     .then(([rows]) => {
@@ -103,13 +100,12 @@ const viewAllEmployees = () => {
     .then(() => mainPrompts());
 };
 
-// function for add a department
 const addDepartment = () => {
   inquirer.prompt([
     {
       type: 'input',
       name: 'name',
-      message: 'What is the name of the department?'
+      message: 'What is the name of the new department?'
     }
   ])
   .then(res => {
@@ -150,13 +146,11 @@ const addRole = () => {
     .then(([rows]) => {
       let departments = rows;
 
-      // map through departments and turn them into an array
       const departmentNames = departments.map(({ id, department }) => ({
         name: department,
         value: id
       }));
 
-      // prompt user for role information
       inquirer.prompt([
         {
           type: 'input',
@@ -221,64 +215,64 @@ const addEmployee = () => {
       message: "What is the employee's last name?"
     }
   ])
-    .then(res => {
-      let firstName = res.first_name;
-      let lastName = res.last_name;
+  .then(res => {
+    let firstName = res.first_name;
+    let lastName = res.last_name;
 
-      db.findAllRoles()
-        .then(([rows]) => {
-          let roles = rows;
-          const roleNames = roles.map(({ id, job_title }) => ({
-            name: job_title,
-            value: id
-          }));
+    db.findAllRoles()
+      .then(([rows]) => {
+        let roles = rows;
+        const roleNames = roles.map(({ id, job_title }) => ({
+          name: job_title,
+          value: id
+        }));
 
-          inquirer.prompt([
-            {
-              type: 'list',
-              name: 'role',
-              message: "What is the employee's role?",
-              choices: roleNames
-            }
-          ])
-            .then(res => {
-              let role = res.role;
+        inquirer.prompt([
+          {
+            type: 'list',
+            name: 'role',
+            message: "What is the employee's role?",
+            choices: roleNames
+          }
+        ])
+        .then(res => {
+          let role = res.role;
 
-              db.findAllEmployees()
-                .then(([rows]) => {
-                  let employees = rows;
-                  const managerNames = employees.map(({ id, first_name, last_name }) => ({
-                    name: `${first_name} ${last_name}`,
-                    value: id
-                  }));
+          db.findAllEmployees()
+              .then(([rows]) => {
+                let employees = rows;
+                const managerNames = employees.map(({ id, first_name, last_name }) => ({
+                  name: `${first_name} ${last_name}`,
+                  value: id
+                }));
 
-                  // add 'none' to manager choices
-                  managerNames.unshift({ name: 'None', value: null });
+                // add 'none' to manager choices
+                managerNames.unshift({ name: 'None', value: null });
 
-                  inquirer.prompt([
-                    {
-                      type: 'list',
-                      name: 'manager',
-                      message: "Who is the employee's manager?",
-                      choices: managerNames
-                    }
-                  ])
-                    .then(res => {
-                      let employee = {
-                        manager_id: res.manager,
-                        role_id: role,
-                        first_name: firstName,
-                        last_name: lastName
-                      }
+                inquirer.prompt([
+                  {
+                    type: 'list',
+                    name: 'manager',
+                    message: "Who is the employee's manager?",
+                    choices: managerNames
+                  }
+                ])
+                .then(res => {
+                  let employee = {
+                    manager_id: res.manager,
+                    role_id: role,
+                    first_name: firstName,
+                    last_name: lastName
+                  }
 
-                      db.addEmployee(employee)
-                        .then(() => console.log(`Added ${firstName} ${lastName} to the database successfully!`))
-                        .then(() => mainPrompts());
-                    });
+                  db.addEmployee(employee)
+                  .then(() => console.log(`Added ${firstName} ${lastName} to the database successfully!`))
+                  .then(() => mainPrompts());
                 });
-            });
+              });
         });
-    });
+      });
+  });
 };
 
 // function for delete an employee
@@ -299,10 +293,10 @@ const deleteEmployee = () => {
           choices: employeeNames
         }
       ])
-        .then(res => db.deleteEmployee(res.employee))
-        .then(() => console.log('Removed employee from the database successfully!'))
-        .then(() => mainPrompts());
-  });
+      .then(res => db.deleteEmployee(res.employee))
+      .then(() => console.log('Removed employee from the database successfully!'))
+      .then(() => mainPrompts());
+    });
 };
 
 // function for update an employee role
@@ -346,7 +340,7 @@ const updateEmployeeRole = () => {
             .then(() => mainPrompts());
           });
       });
-  });
+    });
 };
 
 // function for update an employee manager
@@ -390,8 +384,7 @@ const updateEmployeeManager = () => {
             .then(() => mainPrompts());
           });
       });
-  });
-
+    });
 };
 
 
